@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["jsnaik@gmail.com"]
   spec.summary       = "Send file from s3 file"
   spec.description   = "Send file from s3 file"
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/tinygrasshopper/send_s3_file"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
