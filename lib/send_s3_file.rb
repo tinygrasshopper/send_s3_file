@@ -6,9 +6,7 @@ require "action_controller"
 
 
 module SendS3File
-  def send_s3_file file_name, bucket, options = {}
-    s3 = AWS::S3.new
-    object = s3.buckets[bucket].objects[file_name]
+  def send_s3_file s3_object, options = {}
     headers.merge!(
         'Content-Type'              => build_content_type(options),
         'Content-Disposition'       => build_disposition(options),
@@ -16,11 +14,11 @@ module SendS3File
     )
 
     render :status => options[:status], :text => Proc.new {|response, output|
-      logger.info "Streaming file from s3 #{bucket} #{file_name}" unless logger.nil?
-      object.read do |chunk|
+      logger.info "Streaming file from s3 #{s3_object.bucket} #{s3_object.key}" unless logger.nil?
+      s3_object.read do |chunk|
         output.write(chunk)
       end
-      logger.info "Done Streaming file from s3 #{bucket} #{file_name}" unless logger.nil?
+      logger.info "Done Streaming file from s3 #{s3_object.bucket} #{s3_object.key}" unless logger.nil?
     }
   end
 
