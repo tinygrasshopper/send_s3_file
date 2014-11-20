@@ -10,7 +10,8 @@ module SendS3File
     headers.merge!(
         'Content-Type'              => build_content_type(options),
         'Content-Disposition'       => build_disposition(options),
-        'Content-Transfer-Encoding' => 'binary'
+        'Content-Transfer-Encoding' => 'binary',
+        'Content-Length' => s3_object.content_length
     )
 
     render :status => options[:status], :text => Proc.new {|response, output|
